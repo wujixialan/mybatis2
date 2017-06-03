@@ -37,9 +37,67 @@
         select * from mybatis1.tb1_employee where id = #{id}
     </select>
 
+
     <!--
         场景一：
             查出 Employee 的同时，查出 department
+            一个员工都有一个对应的部门
+    -->
+    <resultMap id="empAndDept1" type="com.zxg.mybatis.Employee">
+        <id column="id" property="id"></id>
+        <result column="last_name" property="lastName"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <!--
+            利用级联属性封装
+        -->
+        <result column="d_id" property="dept.id"/>
+        <result column="dept_name" property="dept.deptName"/>
+    </resultMap>
+
+    <resultMap id="empAndDept2" type="com.zxg.mybatis.Employee">
+        <id column="id" property="id"></id>
+        <result column="last_name" property="lastName"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <!--
+            association 可以指定联合的 Javabean对象
+            property：指定哪个属性时联合属性
+            javaType: 指定联合属性的类型
+        -->
+        <association property="dept" javaType="com.zxg.mybatis.Department">
+            <id column="d_id" property="id"/>
+            <result column="dept_name" property="deptName"/>
+        </association>
+    </resultMap>
+    <select id="getEmpAndDept" resultMap="empAndDept2">
+        select * from mybatis1.tb1_employee, mybatis1.department
+        where tb1_employee.id = #{id} and tb1_employee.dept_id = department.d_id
+    </select>
+
+    <!--
+        使用 association 进行分步查询
+    -->
+    <resultMap id="empStep" type="com.zxg.mybatis.Employee">
+        <id column="id" property="id"/>
+        <result column="last_name" property="lastName"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <association property="dept"
+                     select="com.zxg.dao.DepartmentMapper.getDeptById"
+                     column="dept_id">
+        </association>
+    </resultMap>
+    <select id="getEmpByIdStep" resultMap="empStep">
+        select * from mybatis1.tb1_employee where id = #{id}
+    </select>
+
+    <!--
+        可以进行使用延迟加载(即懒加载)
     -->
 
+
+    <!--
+        查询部门的时候将部门对应的员工查不来
+    -->
 </mapper>

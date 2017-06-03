@@ -19,6 +19,8 @@
             mapUnderscoreToCamelCase: 启用驼峰命名规范
         -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
 
     <!-- 3、typeAliases：别名处理器：可以为我们的java类型起别名
@@ -110,5 +112,6 @@
 		<!-- 批量注册： -->
         <mapper resource="EmployeeMapper.xml"/>
         <mapper resource="EmployeeMapperPlus.xml"/>
+        <mapper resource="DepartmentMapper.xml"/>
     </mappers>
 </configuration>

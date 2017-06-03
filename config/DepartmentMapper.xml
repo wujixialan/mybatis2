@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxg.dao.DepartmentMapper">
+
+    <select id="getDeptById" resultType="com.zxg.mybatis.Department">
+        select d_id id, dept_name deptName from mybatis1.department
+        where department.d_id = #{id}
+    </select>
+
+
+
+    <resultMap id="myDept" type="com.zxg.mybatis.Department">
+        <id column="d_id" property="id"/>
+        <result column="dept_name" property="deptName"/>
+
+        <collection property="employees" ofType="com.zxg.mybatis.Employee">
+            <id column="id" property="id"/>
+            <result column="last_name" property="lastName"/>
+            <result column="gender" property="gender"/>
+            <result column="email" property="email"/>
+        </collection>
+    </resultMap>
+    <select id="getDeptByIdPlus" resultMap="myDept">
+        select * from department left join tb1_employee
+        on department.d_id = tb1_employee.dept_id where department.d_id = #{id}
+    </select>
+
+</mapper>
