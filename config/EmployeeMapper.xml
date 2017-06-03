@@ -75,4 +75,8 @@
     <select id="getEmpByIdReturnMap" resultType="map">
         select * from tb1_employee where id = #{id}
     </select>
+
+    <select id="getEmpByLastName" resultType="com.zxg.mybatis.Employee">
+        select * from mybatis1.tb1_employee where last_name like #{lastName}
+    </select>
 </mapper>

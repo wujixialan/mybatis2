@@ -313,4 +313,35 @@ public class MyBatisTest {
             sqlSession.close();
         }
     }
+
+    /**
+     * 返回值为 Map 类型
+     */
+    @Test
+    public void testGetEmpByLastName() {
+        SqlSessionFactory sqlSessionFactory = null;
+        SqlSession sqlSession = null;
+        Map<Integer, Employee> map = new HashMap<>();
+
+        try {
+            sqlSessionFactory = getSqlSessionFactory();
+            /**
+             * openSession()： 如果使用这个 openSession()，必须手动提交
+             * openSession(boolean var1); 如果使用这个 openSession(true); 可以不用手动提交
+             */
+            sqlSession = sqlSessionFactory.openSession();
+            EmployeeMapper empMapper = sqlSession.getMapper(EmployeeMapper.class);
+            map = empMapper.getEmpByLastName("%xia%");
+            System.out.println("map = " + map);
+            for (Map.Entry entry: map.entrySet()) {
+                System.out.println(entry);
+            }
+            sqlSession.commit();
+        } finally {
+            /**
+             * 关闭 sqlSession
+             */
+            sqlSession.close();
+        }
+    }
 }

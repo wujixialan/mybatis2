@@ -1,6 +1,7 @@
 package com.zxg.dao;
 
 import com.zxg.mybatis.Employee;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -41,4 +42,13 @@ public interface EmployeeMapper {
     public List<Employee> getEmpByListNameLike(String lastName);
 
     public Map<String, Object> getEmpByIdReturnMap(Integer id);
+
+    /**
+     * 返回值的类型是 Map
+     * @param lastName
+     * @return
+     * @MapKey("id") 告诉 mybatis 使用哪个属性作为 map 的 key
+     */
+    @MapKey("id")
+    public Map<Integer, Employee> getEmpByLastName(String lastName);
 }
