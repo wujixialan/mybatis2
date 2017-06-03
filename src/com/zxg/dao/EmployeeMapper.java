@@ -37,4 +37,6 @@ public interface EmployeeMapper {
      * @return
      */
     public Employee getEmpList(List<Integer> list);
+
+    public List<Employee> getEmpByListNameLike(String lastName);
 }

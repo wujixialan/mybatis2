@@ -67,4 +67,8 @@
     <select id="getEmpList" resultType="com.zxg.mybatis.Employee">
         select * from tb1_employee where id = ${list[2]}
     </select>
+
+    <select id="getEmpByListNameLike" resultType="com.zxg.mybatis.Employee">
+        select * from tb1_employee where last_name like #{lastName}
+    </select>
 </mapper>

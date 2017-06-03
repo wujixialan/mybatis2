@@ -263,4 +263,29 @@ public class MyBatisTest {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void testGetEmpByLastNameLike() {
+        SqlSessionFactory sqlSessionFactory = null;
+        SqlSession sqlSession = null;
+        List<Employee> list = new ArrayList<>();
+
+        try {
+            sqlSessionFactory = getSqlSessionFactory();
+            /**
+             * openSession()： 如果使用这个 openSession()，必须手动提交
+             * openSession(boolean var1); 如果使用这个 openSession(true); 可以不用手动提交
+             */
+            sqlSession = sqlSessionFactory.openSession();
+            EmployeeMapper empMapper = sqlSession.getMapper(EmployeeMapper.class);
+            list = empMapper.getEmpByListNameLike("%xia%");
+            System.out.println("list = " + list);
+            sqlSession.commit();
+        } finally {
+            /**
+             * 关闭 sqlSession
+             */
+            sqlSession.close();
+        }
+    }
 }
