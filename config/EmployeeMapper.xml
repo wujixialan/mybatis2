@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    namespace: 命名空间；指定为接口的全类名
+    id：唯一标识
+    resultType：返回值类型
+    #{id}：从传递过来的参数中取出id值
+-->
+<mapper namespace="com.zxg.dao.EmployeeMapper">
+
+    <!--<select id="getEmpById" resultType="com.zxg.mybatis.Employee">-->
+        <!--select * from tb1_employee where id = #{id}-->
+    <!--</select>-->
+    <select id="getEmpById" resultType="com.zxg.mybatis.Employee" databaseId="sqlserver">
+        select id, last_name lastName, email, gender from tb1_employee where id = #{id}
+    </select>
+
+    <select id="getEmpById" resultType="com.zxg.mybatis.Employee" databaseId="mysql">
+        select id, last_name lastName, email, gender from tb1_employee where id = #{id}
+    </select>
+
+    <!-- parameterType：参数类型，可以省略，
+	获取自增主键的值：
+		mysql支持自增主键，自增主键值的获取，mybatis也是利用statement.getGenreatedKeys()；
+		useGeneratedKeys="true"；使用自增主键获取主键值策略
+		keyProperty；指定对应的主键属性，也就是mybatis获取到主键值以后，将这个值封装给javaBean的哪个属性
+	-->
+    <insert id="addEmp" parameterType="com.zxg.mybatis.Employee" useGeneratedKeys="true" keyProperty="id">
+        insert into tb1_employee(id, last_name, email, gender)
+        values(#{id}, #{lastName}, #{email}, #{gender})
+    </insert>
+
+    <update id="modifyEmp" parameterType="com.zxg.mybatis.Employee">
+        update tb1_employee set last_name = #{lastName}, email = #{email}, gender = #{gender}
+         where id = #{id}
+    </update>
+
+    <delete id="deleteEmp">
+        delete from tb1_employee where id = #{id}
+    </delete>
+
+    <!--
+        查询时，resultType 必须写。
+        否则出现异常：A query was run and no Result Maps were found for the Mapped Statement
+        'com.zxg.dao.EmployeeMapper.getIdAndLastName'.  I
+        t's likely that neither a Result Type nor a Result Map was specified.
+    -->
+    <!--<select id="getIdAndLastName" resultType="com.zxg.mybatis.Employee">-->
+        <!--select * from tb1_employee where id = #{param1} and last_name = #{param2}-->
+    <!--</select>-->
+    <!--<select id="getIdAndLastName" resultType="com.zxg.mybatis.Employee">-->
+        <!--select * from tb1_employee where id = #{0} and last_name = #{1}-->
+    <!--</select>-->
+    <!--
+        使用了命名参数法
+    -->
+    <select id="getIdAndLastName" resultType="com.zxg.mybatis.Employee">
+        select * from tb1_employee where id = ${id} and last_name = #{lastName}
+    </select>
+
+    <select id="getMap" resultType="com.zxg.mybatis.Employee">
+        select * from tb1_employee where id = #{id} and last_name = #{lastName}
+    </select>
+
+    <select id="getEmpList" resultType="com.zxg.mybatis.Employee">
+        select * from tb1_employee where id = ${list[2]}
+    </select>
+</mapper>
