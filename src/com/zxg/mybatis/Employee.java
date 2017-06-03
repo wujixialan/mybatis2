@@ -1,8 +1,11 @@
 package com.zxg.mybatis;
 
+import org.apache.ibatis.type.Alias;
+
 /**
  * Created by zxg on 2017/5/23.
  */
+@Alias("emp")
 public class Employee {
     private Integer id;
     private String lastName;
