@@ -28,4 +28,33 @@
         on department.d_id = tb1_employee.dept_id where department.d_id = #{id}
     </select>
 
+
+    <!--
+        分步查询
+    -->
+    <resultMap id="myDeptStep" type="com.zxg.mybatis.Department">
+        <id column="d_id" property="id"/>
+        <result column="dept_name" property="deptName"/>
+
+        <collection property="employees"
+                    select="com.zxg.dao.EmployeeMapperPlus.getEmpsByDeptId"
+        column="d_id">
+        </collection>
+    </resultMap>
+    <select id="getDeptByIdStep" resultMap="myDeptStep">
+        select * from mybatis1.department where d_id = #{id}
+    </select>
+
+    <!--
+        扩展：将多列的值传递过去
+        将多列的值分装成map
+        column={key1=c1, key2=c2}
+        fetchType="lazy"
+                    -lazy: 懒加载
+                    -eager：立即加载
+    -->
+    <!--
+        discriminator: 鉴别器 mybatis 可以使用 discriminator 判断某列的值
+    -->
+
 </mapper>

@@ -87,4 +87,18 @@ public class EmployeePlus {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void testGetEmpsByDeptId() {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = this.sqlSessionFactory.openSession(true);
+            DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
+            Department department = departmentMapper.getDeptByIdStep(2);
+            System.out.println("department = " + department.getId());
+            System.out.println("emp = " + department.getEmployees());
+        } finally {
+            sqlSession.close();
+        }
+    }
 }

@@ -100,4 +100,9 @@
     <!--
         查询部门的时候将部门对应的员工查不来
     -->
+
+
+    <select id="getEmpsByDeptId" resultType="com.zxg.mybatis.Employee">
+        select * from mybatis1.tb1_employee where dept_id = #{id}
+    </select>
 </mapper>
