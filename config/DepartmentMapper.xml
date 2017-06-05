@@ -57,4 +57,5 @@
         discriminator: 鉴别器 mybatis 可以使用 discriminator 判断某列的值
     -->
 
+
 </mapper>
